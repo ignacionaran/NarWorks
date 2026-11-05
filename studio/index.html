@@ -22,32 +22,57 @@
   <div class="header-actions"><a href="../#contact" class="header-cta">Start ↗</a></div>
 </header>
 
-<main class="page">
-  <div class="eyebrow">01 / Studio</div>
-  <h1 class="display">Studio</h1>
-
+<main class="studio-stage">
   <div class="studio-video">
-  <iframe
-    src="https://www.youtube-nocookie.com/embed/g_vZasFzMN4?rel=0&modestbranding=1"
-    title="Studio video"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-    loading="lazy"
-    referrerpolicy="strict-origin-when-cross-origin"></iframe>
-</div>
-
-  <div class="studio-copy">
-    <p>Visual systems where identity, motion, image and digital become one language.</p>
-    <div>
-      <p>We partner with ambitious teams to turn strategic thinking into memorable visual systems.</p>
-      <p>From the first idea to the final interaction, every detail is built to communicate with precision.</p>
-    </div>
+    <div id="player"></div>
+    <button class="unmute" id="unmute" type="button" hidden>Tap for sound</button>
   </div>
 </main>
 
-<footer class="page-footer">
-  <a href="../">← Back home</a>
-  <span>© 2026</span>
-</footer>
+<script>
+(function () {
+  var VIDEO_ID = 'g_vZasFzMN4';
+  var player, btn = document.getElementById('unmute');
+
+  btn.addEventListener('click', function () {
+    if (!player) return;
+    player.unMute();
+    player.setVolume(100);
+    player.playVideo();
+    btn.hidden = true;
+  });
+
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player('player', {
+      videoId: VIDEO_ID,
+      host: 'https://www.youtube-nocookie.com',
+      width: '100%',
+      height: '100%',
+      playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1 },
+      events: {
+        onReady: function (e) {
+          e.target.unMute();
+          e.target.setVolume(100);
+          e.target.playVideo();
+          setTimeout(function () {
+            if (player.getPlayerState() !== 1) {
+              player.mute();
+              player.playVideo();
+            }
+          }, 1200);
+        },
+        onStateChange: function (e) {
+          if (e.data === 1 && player.isMuted()) btn.hidden = false;
+          if (e.data === 1 && !player.isMuted()) btn.hidden = true;
+        }
+      }
+    });
+  };
+
+  var s = document.createElement('script');
+  s.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(s);
+})();
+</script>
 </body>
 </html>
