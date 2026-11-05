@@ -396,11 +396,17 @@ html.lenis,html.lenis body{height:auto}
   *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 </style>
+<link rel="stylesheet" href="preloader.css">  
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
 <div class="noise" aria-hidden="true"></div>
-<div class="preloader" aria-hidden="true"><span>NARWORKS Co.</span></div>
+<div class="preloader" aria-hidden="true">
+  <div class="pl-logo">
+    <span class="pl-dot"></span>
+    <span class="pl-word"><span class="pl-word-inner">Naran</span></span>
+  </div>
+</div>
 
 <header class="site-header">
   <a href="#top" class="logo"><b>Nar</b><i>/</i><b>works</b></a>
@@ -742,7 +748,7 @@ html.lenis,html.lenis body{height:auto}
 
   var header = $('.site-header');
   var progress = $('.scroll-progress');
-  var preloader = $('.preloader');
+  var preloader = null;
   var menuBtn = $('.menu-btn');
   var menu = $('#mobileMenu');
 
@@ -847,7 +853,7 @@ html.lenis,html.lenis body{height:auto}
 
   /* Preloader + hero intro */
   if (preloader) preloader.style.display = 'flex';
-  var introTL = gsap.timeline();
+  var introTL = gsap.timeline({ paused: true }); window.introTL = introTL; setTimeout(function () { introTL.play(); }, 4000);
   if (preloader) {
     introTL
       .to('.preloader span', { y: -20, opacity: 0, duration: .5, delay: .3, ease: 'power3.in' })
@@ -1068,5 +1074,6 @@ html.lenis,html.lenis body{height:auto}
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupVideos); else setupVideos();
 })();
 </script>
+<script src="preloader.js"></script>
 </body>
 </html>
