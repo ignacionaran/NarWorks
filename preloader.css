@@ -1,0 +1,21 @@
+.preloader{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:var(--paper);color:#262626;
+  align-items:center;justify-content:center;
+}
+.pl-logo{
+  display:flex;align-items:center;
+  font-family:Inter,Arial,sans-serif;font-weight:800;
+  font-size:clamp(40px,6vw,96px);
+}
+.pl-dot{
+  flex:none;width:1.4em;height:1.4em;border-radius:50%;
+  background:#ff6b35;
+}
+.pl-word{
+  flex:none;display:block;overflow:hidden;white-space:nowrap;
+  margin-left:.17em;padding:.1em .06em .1em 0;
+}
+.pl-word-inner{
+  display:block;line-height:1;letter-spacing:-.055em;
+}
